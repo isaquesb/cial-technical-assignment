@@ -7,10 +7,13 @@ class Router {
 
   routes (options) {
     const { prefix } = options
+    if (!prefix) {
+      return this.middleware()
+    }
     const router = new Router()
-    Object.keys(this.routeMap).forEach((route) => {
+    Object.keys(this.routeMap).forEach(route => {
       const routeInfo = this.routeMap[route]
-      Object.keys(routeInfo).forEach((method) => {
+      Object.keys(routeInfo).forEach(method => {
         const { path, handler } = routeInfo[method]
         router.addRoute(method, `${prefix}${path}`, handler)
       })
@@ -22,7 +25,7 @@ class Router {
     path = path.replace(/\/$/g, '')
     const segments = path.split('/')
     const keys = []
-    const regexSegments = segments.map((segment) => {
+    const regexSegments = segments.map(segment => {
       if (segment.startsWith(':')) {
         keys.push(segment.substr(1))
         return '([^/]+)'
@@ -45,18 +48,20 @@ class Router {
   matchRoute (method, path) {
     for (const routePath of Object.keys(this.routeMap)) {
       const route = this.routeMap[routePath][method]
-      if (route) {
-        const match = path.match(route.regex)
-        if (match) {
-          const params = {}
-          route.keys.forEach((key, index) => {
-            params[key] = match[index + 1]
-          })
-          return {
-            handler: route.handler,
-            params
-          }
-        }
+      if (!route) {
+        continue
+      }
+      const match = path.match(route.regex)
+      if (!match) {
+        continue
+      }
+      const params = {}
+      route.keys.forEach((key, index) => {
+        params[key] = match[index + 1]
+      })
+      return {
+        handler: route.handler,
+        params
       }
     }
     return null
@@ -89,8 +94,7 @@ class Router {
         const body = []
         req.on('data', (chunk) => {
           body.push(chunk)
-        })
-        req.on('end', () => {
+        }).on('end', () => {
           try {
             const jsonBody = Buffer.concat(body).toString()
             const resp = {

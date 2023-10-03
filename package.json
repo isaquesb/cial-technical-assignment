@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node .",
     "lint": "eslint --fix ./src/lib",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --coverage --verbose --runInBand --detectOpenHandles --forceExit"
   },
   "author": "CIAL Dun & Bradstreet",
   "license": "UNLICENSED",
@@ -15,11 +15,12 @@
     "http": "^0.0.1-security"
   },
   "devDependencies": {
-    "assert": "^2.1.0",
     "eslint": "^8.0.1",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
-    "eslint-plugin-promise": "^6.0.0"
+    "eslint-plugin-promise": "^6.0.0",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3"
   }
 }

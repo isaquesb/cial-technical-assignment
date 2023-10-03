@@ -4,24 +4,21 @@
  * This module should export your implementation of WebApp class.
  */
 const Server = require('./server')
-
+const jsonAccessLogMiddleware = require('./json-access-log')
 class WebApp {
   middlewares = []
+  server = null
 
   constructor () {
-    this.use((req, res, next) => {
-      console.log('Request received')
-      console.log(req.method, req.url)
-      next()
-    })
+    this.use(jsonAccessLogMiddleware)
+    this.server = new Server(this.middlewares)
   }
 
   use = (middleware) => this.middlewares.push(middleware)
 
   start = (port) => {
-    const server = new Server(this.middlewares)
-    server.start(port)
-    return server
+    this.server.start(port)
+    return this.server
   }
 }
 
