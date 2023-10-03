@@ -117,4 +117,48 @@ Good luck! :rocket:
 
 # Technical assignment - documentation
 
-TODO: add any general/docker documentation here
+## Application
+
+This is a web app for register and manage documents. It is a simple REST API level 2, which supports the following operations:
+
+- `GET /documents` - returns a list of all documents
+- `GET /documents/:documentId` - returns a single document
+- `POST /documents` - creates a new document
+- `DELETE /documents/:documentId` - deletes an existing document
+
+### Install
+
+Use docker compose to run the application:
+```bash
+docker compose up -d
+```
+
+and access in a REST Client with one Authorization Header at http://localhost/documents
+
+Docker is configured to use port 80, then verify if the port is available.
+
+````bash
+curl --request GET \
+  --url http://localhost/documents \
+  --header 'Authorization: Bearer your-token' \
+  --header 'User-Agent: insomnia/8.1.0'
+````
+
+or run the application locally via npm:
+
+```bash
+npm install
+npm start
+```
+
+and access in a REST Client with one Authorization Header at http://localhost:3000/documents
+
+NPM use port 3000
+
+### Tests
+
+Run the tests via npm after install the dependencies:
+
+```bash
+npm test
+```

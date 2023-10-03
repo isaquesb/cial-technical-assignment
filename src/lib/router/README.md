@@ -1,1 +1,11 @@
-TODO: document your Router implementation here. Include the general idea, technical details, problems encountered and any possible improvements you'd consider in future development.
+# Router
+
+## Overview
+
+This is a router basic implementation of the url-based routing middleware.
+
+## Features
+
+- Middleware Based
+- Regex matching with :keys
+- JSON support for I/O only
