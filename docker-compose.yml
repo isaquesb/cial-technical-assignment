@@ -1,0 +1,19 @@
+version: '3'
+services:
+    app:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        image: cial/technical-assignment
+        container_name: tech_assignment
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        ports:
+            - '${APP_PORT:-80}:3000'
+        environment:
+            ENV: '${APP_ENV:-production}'
+        networks:
+            - isb-ntw
+networks:
+    isb-ntw:
+        driver: bridge
