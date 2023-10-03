@@ -22,7 +22,7 @@ class Server {
 
   handleError (err, res) {
     let code = 500
-    let body = { error: 'Internal Server Error' + err }
+    let body = { error: 'Internal Server Error' }
     if (err instanceof ApiError) {
       code = err.statusCode
       body = { error: err.message }
